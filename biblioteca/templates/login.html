@@ -1,16 +1,24 @@
-<!DOCTYPE html>
-<html>
-<head><title>Iniciar Sesión</title></head>
-<body>
-  <h2>Iniciar sesión</h2>
+{% extends "base.html" %}
+
+{% block title %}Iniciar sesión{% endblock %}
+
+{% block content %}
+  <h2 class="mb-4"> 👤 Iniciar sesión</h2>
+
   {% if form.errors %}
-    <p style="color:red;">Usuario o contraseña incorrectos.</p>
+      <div class="alert alert-danger">Usuario o contraseña incorrectos. </div>
   {% endif %}
+
   <form method="post">
     {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Entrar</button>
+    <div class="mb-3">
+        {{ form.username.label_tag }}
+        {{ form.username }}
+    </div>
+    <div class="mb-3">
+        {{ form.password.label_tag }}
+        {{ form.password }}
+    </div>
+    <button type="submit" class="btn btn-primary">Entrar</button>
   </form>
-</body>
-</html>
-
+{% endblock %}

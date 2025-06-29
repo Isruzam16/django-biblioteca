@@ -1,23 +1,27 @@
-<!DOCTYPE html>
-<html>
-<head><title>Mi Historial</title></head>
-<body>
-  <h1>Historial de Préstamos</h1>
-  <a href="{% url 'inicio' %}">Volver al inicio</a>
+{% extends "base.html" %}
+{% block title %}Historial{% endblock %}
+
+{% block content %}
+  <h2>Historial de Préstamos</h2>
+  <a href="{% url 'inicio' %}" class="btn btn-link"> ⬅ Volver al inicio</a>
 
   {% if prestamos %}
-    <ul>
+    <ul class="list-group mt-3">
       {% for prestamo in prestamos %}
-        <li>
-          {{ prestamo.libro.titulo }} |
-          Prestado el: {{ prestamo.fecha_prestamo }} |
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+        <div class="ms-2 me-3">
+            <strong>{{ prestamo.libro.titulo }}</strong><br>
+            Prestado el: {{ prestamo.fecha_prestamo }}
           {% if prestamo.devuelto %}
-            ✅ Devuelto
+            <span class="badge bg-success ms-2">✅ Devuelto</span>
           {% else %}
-            ❌ No devuelto
-              <form action="{% url 'devolver_libro' prestamo.id %}" method="post" style="display:inline;">
-                {% csrf_token %}
-                <button type="submit">Devolver</button>
+            <span class="badge bg-warning text-dark ms-2">❌ No devuelto</span>
+            {% endif %}
+        </div>
+         {% if not prestamo.devuelto %}
+             <form action="{% url 'devolver_libro' prestamo.id %}" method="post">
+                 {% csrf_token %}
+                 <button type="submit" class="btn btn-sm btn-danger">Devolver</button>
               </form>
           {% endif %}
         </li>
@@ -26,6 +30,6 @@
   {% else %}
     <p>No tienes préstamos registrados.</p>
   {% endif %}
-</body>
-</html>
+{% endblock %}
+
 

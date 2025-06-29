@@ -1,19 +1,34 @@
-<!DOCTYPE html>
-<html>
-<head><title>Libros</title></head>
-<body>
-  <h1>Listado de Libros</h1>
-  <ul>
-    {% for libro in libros %}
-      <li>
-        {{ libro.titulo }} - {{ libro.autor }}
-        {% if libro.disponible %}
-          <a href="{% url 'prestar_libro' libro.id %}">[Prestar]</a>
-        {% else %}
-          [No disponible]
-        {% endif %}
-      </li>
-    {% endfor %}
-  </ul>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block title %}Lista de Libros{% endblock %}
+
+{% block content %}
+  <h2> 📚 Listado de Libros</h2>
+    <a href="{% url 'inicio' %}" class="btn btn-link"> ⬅ Volver al inicio</a>
+
+  {% if libros %}
+    <div class="mt-4">
+      <div class="list-group">
+        {% for libro in libros %}
+          <div class="list-group-item d-flex justify-content-between align-items-center">
+            <div>
+              <h5 class="mb-1">{{ libro.titulo }}</h5>
+              <small class="text-muted">{{ libro.autor }}</small>
+              <p class="mb-1">ISBN: {{ libro.isbn }}</p>
+            </div>
+            <div>
+              {% if libro.disponible %}
+                <a href="{% url 'prestar_libro' libro.id %}" class="btn btn-sm btn-outline-primary">Prestar</a>
+              {% else %}
+                <span class="badge bg-secondary">No disponible</span>
+              {% endif %}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+
+  {% else %}
+    <p>No hay libros registrados en este momento.</p>
+  {% endif %}
+{% endblock %}
