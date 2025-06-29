@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head><title>Libros</title></head>
+<body>
+  <h1>Listado de Libros</h1>
+  <ul>
+    {% for libro in libros %}
+      <li>
+        {{ libro.titulo }} - {{ libro.autor }}
+        {% if libro.disponible %}
+          <a href="{% url 'prestar_libro' libro.id %}">[Prestar]</a>
+        {% else %}
+          [No disponible]
+        {% endif %}
+      </li>
+    {% endfor %}
+  </ul>
+</body>
+</html>

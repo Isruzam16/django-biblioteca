@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head><title>Inicio</title></head>
+<body>
+  <h1>Bienvenido al Sistema de Biblioteca</h1>
+  {% if user.is_authenticated %}
+    <p>Hola, {{ user.username }}</p>
+      <form action="{% url 'logout' %}" method="post">
+    {% csrf_token %}
+    <button type="submit">Cerrar sesión</button>
+  </form>
+      <a href="{% url 'lista_libros' %}">Ver libros</a>
+      <a href="{% url 'historial_usuario' %}">Ver historial</a>
+  {% else %}
+    <a href="{% url 'login' %}">Iniciar sesión</a>
+  {% endif %}
+
+</body>
+</html>
