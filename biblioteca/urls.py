@@ -10,6 +10,8 @@ urlpatterns = [
     path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(next_page='inicio'), name='logout'),
     path('historial/', views.historial_usuario, name='historial_usuario'),
+    path('devolver/<int:prestamo_id>/', views.devolver_libro, name='devolver_libro'),
+    path('exportar/', views.exportar_json, name='exportar_json'),
 
 ]
 

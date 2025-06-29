@@ -2,8 +2,9 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Libro, Prestamo
 from django.contrib.auth.models import User
 from django.utils import timezone
-from django.contrib.auth.decorators import login_required
-
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.core.serializers import serialize
+from django.http import HttpResponse
 # Create your views here.
 def inicio(request):
     libros = Libro.objects.all()
@@ -30,3 +31,23 @@ def prestar_libro(request, libro_id):
 def historial_usuario(request):
     prestamos = Prestamo.objects.filter(usuario=request.user).order_by('-fecha_prestamo')
     return render(request, 'historial.html', {'prestamos': prestamos})
+
+@login_required
+def devolver_libro(request, prestamo_id):
+    prestamo = get_object_or_404(Prestamo, id=prestamo_id, usuario=request.user)
+
+    if not prestamo.devuelto:
+        prestamo.devuelto = True
+        prestamo.fecha_devolucion = timezone.now()
+        prestamo.libro.disponible = True
+        prestamo.libro.save()
+        prestamo.save()
+
+    return redirect('historial_usuario')
+
+@user_passes_test (lambda u: u.is_superuser) # Solo permite superusuarios
+def exportar_json(request):
+    data = serialize('json', Libro.objects.all()) + serialize('json', Prestamo.objects.all())
+    response = HttpResponse(data, content_type='application/json')
+    response['Content-Disposition'] = 'attachment; filename="backup_biblioteca.json"'
+    return response
