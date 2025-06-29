@@ -76,8 +76,8 @@ Proyecto académico desarrollado en Django como tarea universitaria. Permite adm
 ## 👤 Créditos
 
 - Desarrollado por: [Sebas]
-- Universidad: [Nombre de tu universidad]
-- Semestre: Tercero
+- Universidad: UNEMI
+- Aula: A1
 - Año: 2025
 
 ---
@@ -85,8 +85,7 @@ Proyecto académico desarrollado en Django como tarea universitaria. Permite adm
 ## 📝 Notas
 
 - El proyecto incluye archivos de ejemplo para exportar y restaurar datos.
-- Los archivos `.sqlite3`, `.env` y otros datos sensibles están excluidos por `.gitignore`.
-- Si tienes dudas o sugerencias, ¡puedes abrir un Issue o hacer un Pull Request!
+- Los archivos `.sqlite3`, `.env` están excluidos por `.gitignore`.
 
 ---
 
