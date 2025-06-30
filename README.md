@@ -20,7 +20,7 @@ Proyecto académico desarrollado en Django como tarea universitaria. Permite adm
 
 1. **Clonar el repositorio:**
     ```bash
-    git clone https://github.com/tu-usuario/django-biblioteca.git
+    git clone https://github.com/Sebastian-Rb/django-biblioteca
     cd django-biblioteca
     ```
 
