@@ -6,6 +6,10 @@
   <h2> 📚 Listado de Libros</h2>
     <a href="{% url 'inicio' %}" class="btn btn-link"> ⬅ Volver al inicio</a>
 
+{% if user.is_staff %}
+  <a href="{% url 'nuevo_libro' %}" class="btn btn-success mb-3">Agregar nuevo libro</a>
+{% endif %}
+
   {% if libros %}
     <div class="mt-4">
       <div class="list-group">
@@ -14,7 +18,9 @@
             <div>
               <h5 class="mb-1">{{ libro.titulo }}</h5>
               <small class="text-muted">{{ libro.autor }}</small>
-              <p class="mb-1">ISBN: {{ libro.isbn }}</p>
+              <p class="mb-1">ISBN: {{ libro.isbn }}<br>
+                  <strong>Stock:</strong> {{ libro.stock }}<br>
+              </p>
             </div>
             <div>
               {% if libro.disponible %}

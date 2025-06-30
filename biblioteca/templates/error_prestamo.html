@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block title %}Error de Préstamo{% endblock %}
+{% block content %}
+  <div class="alert alert-danger">
+    {{ mensaje }}
+  </div>
+  <a href="{% url 'historial_usuario' %}" class="btn btn-link">Ver tu historial</a>
+  <a href="{% url 'lista_libros' %}" class="btn btn-primary">Volver a libros</a>
+{% endblock %}

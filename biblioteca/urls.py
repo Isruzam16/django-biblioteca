@@ -12,6 +12,7 @@ urlpatterns = [
     path('historial/', views.historial_usuario, name='historial_usuario'),
     path('devolver/<int:prestamo_id>/', views.devolver_libro, name='devolver_libro'),
     path('exportar/', views.exportar_json, name='exportar_json'),
+    path('libros/nuevo/', views.nuevo_libro, name='nuevo_libro'),
 
 ]
 
