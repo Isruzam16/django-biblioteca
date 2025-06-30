@@ -4,18 +4,99 @@
   <meta charset="UTF-8">
   <title>{% block title %}Sistema de Biblioteca{% endblock %}</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body class="bg-light">
+  <link rel="icon" type="image/png" href="https://tse2.mm.bing.net/th/id/OIP.T6Z5u8KT0CLiBWDjYVQwCwHaHa?rs=1&pid=ImgDetMain&o=7&rm=3"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
-  <div class="container mt-5">
-    <div class="card shadow p-4">
-      {% block content %}
-      <!-- Aquí va el contenido de cada página -->
-      {% endblock %}
+  <style>
+    body { background: #f8fafb; }
+    .navbar-brand { font-size: 1.5rem; font-weight: bold; }
+    .nav-link { font-size: 1.05rem; }
+    .page-header-icon { font-size: 2.1rem; vertical-align: middle; margin-right: 10px; }
+    .card { border-radius: 1.2rem; }
+    .form-label { font-weight: 500; }
+  </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-success mb-4">
+  <div class="container">
+    <a class="navbar-brand" href="{% url 'inicio' %}">
+      <span class="page-header-icon">📚</span>
+      Biblioteca
+    </a>
+    <div class="collapse navbar-collapse justify-content-end">
+      <ul class="navbar-nav ms-auto align-items-center">
+        <!-- Git -->
+        <li class="nav-item mx-1">
+          <a class="nav-link text-white" href="https://github.com/Sebastian-Rb/django-biblioteca" target="_blank" rel="noopener" title="Ver en GitHub">
+            <img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" width="20" style="margin-bottom:4px; margin-right:2px;">
+          </a>
+        </li>
+
+        <li class="nav-item mx-1">
+          <a class="nav-link text-white" href="https://github.com/Sebastian-Rb/django-biblioteca#readme" target="_blank" rel="noopener" title="Ayuda/README">
+            <span style="font-size:1.25rem; font-weight:bold;">?</span>
+          </a>
+        </li>
+        <!-- nombre -->
+        {% if user.is_authenticated %}
+          <li class="nav-item mx-2">
+            <span class="navbar-text text-white">👤 {{ user.username }}</span>
+          </li>
+          <!-- Cerrar sesión -->
+          <li class="nav-item mx-1">
+            <form method="post" action="{% url 'logout' %}" style="display:inline;">
+              {% csrf_token %}
+              <button class="btn btn-outline-light btn-sm" type="submit">Cerrar sesión</button>
+            </form>
+          </li>
+        {% else %}
+          <!-- Iniciar sesión -->
+          <li class="nav-item mx-1">
+            <a href="{% url 'login' %}" class="btn btn-outline-light btn-sm ms-2">Iniciar sesión</a>
+          </li>
+        {% endif %}
+      </ul>
     </div>
   </div>
+</nav>
 
+  <!-- Contenido principal -->
+  <div class="container">
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} mt-2">{{ message }}</div>
+      {% endfor %}
+    {% endif %}
+    <div class="card shadow-sm mx-auto my-5" style="max-width: 950px;">
+      <div class="card-body">
+        {% block content %}{% endblock %}
+      </div>
+    </div>
+  </div>
+ <footer class="footer mt-auto py-3 bg-success text-white shadow-sm fixed-bottom">
+  <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center">
+
+    <div>
+      <img src="https://www.unemi.edu.ec/wp-content/uploads/2021/09/LOGO-WEB-AZUL.png" alt="UNEMI" height="38" style="background:transparent; border-radius:7px; padding:2px;">
+    </div>
+
+    <div class="text-center my-1">
+      © {{ now.year }} Sistema de Biblioteca | Desarrollado por Grupo 4
+    </div>
+
+    <div>
+      <a href="mailto:gramirezb6@unemi.edu.ec" class="btn btn-outline-light btn-sm mx-1" title="Contacto">
+        <span class="bi bi-envelope"></span> Contacto
+      </a>
+      {% if user.is_authenticated and user.is_staff %}
+        <a href="/admin/" class="btn btn-outline-light btn-sm mx-1" title="Panel de administración">
+          <span class="bi bi-shield-lock"></span> Admin
+        </a>
+      {% endif %}
+    </div>
+  </div>
+</footer>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-
